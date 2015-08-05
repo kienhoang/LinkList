@@ -34,8 +34,5 @@ void Input_console(std::string &name, int &code, int id) {
 int main() {
 	std::string name;
 	int code;
-	Input_console(name, code,1);
-	std::cout << "Name: " << name << "\nCode: " << code;
-	getchar();
 	return 0;
 }

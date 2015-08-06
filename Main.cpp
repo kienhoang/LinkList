@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Student.h"
-#include "StudentFunction.h"
 
+using namespace stdnt;
 
 int main() {
 	std::string name="";
@@ -26,6 +26,7 @@ int main() {
 			DeleteStudent_console(first, i);
 			break;
 		case 0:
+			Release(first);
 			t1 = false;
 			break;
 		default:

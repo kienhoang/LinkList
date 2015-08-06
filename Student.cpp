@@ -1,9 +1,11 @@
 #include "Student.h"
 
-Student::Student(std::string name, int code)
+Student::Student(std::string name, int code,int id)
 {
 	name_ = name;
 	code_ = code;
+	id_ = id;
+	next_ = 0;
 }
 
 void Student::setName(std::string name)
@@ -36,6 +38,17 @@ Student * Student::getNext()
 	return next_;
 }
 
+void Student::setID(int id)
+{
+	id_ = id;
+}
+
+int Student::getID()
+{
+	return id_;
+}
+
 Student::~Student()
 {
 }
+

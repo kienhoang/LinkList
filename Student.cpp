@@ -301,7 +301,7 @@ void stdnt::Input_console(std::string &name, int &code, int id) {
 	std::cout << " student:\n";
 	std::cout << "     Name: ";
 	std::getline(std::cin, name);
-	StringProcess(name);
+	NameProcess(name);
 	std::cout << "     Code: ";
 	std::cin >> code;
 	std::cin.ignore(1);
@@ -418,7 +418,7 @@ void stdnt::FindName_console(Student * first)
 		std::string name;
 		std::cout << "Enter Name of Student to search: ";
 		std::getline(std::cin, name);
-		StringProcess(name);
+		NameProcess(name);
 		FindName * fn;
 		int n = FindByName(name, first, fn);
 		if (n != 0) {

@@ -51,7 +51,7 @@ void UpcaseFirstSpace(std::string &c)
 		}
 	}
 }
-void StringProcess(std::string &c) {
+void NameProcess(std::string &c) {
 	Trim(c);
 	ToLowerString(c);
 	UpcaseFirstSpace(c);

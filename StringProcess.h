@@ -6,4 +6,4 @@ void Trim_right(std::string &c);
 void Trim(std::string &c);
 void ToLowerString(std::string &c);
 void UpcaseFirstSpace(std::string &c);
-void StringProcess(std::string &c);
+void NameProcess(std::string &c);

@@ -7,6 +7,8 @@ Student::Student(std::string name, int code,int id)
 	id_ = id;
 	next_ = 0;
 }
+Student::~Student() {
+}
 void Student::setName(std::string name)
 {	
 	name_ = name;
@@ -27,7 +29,7 @@ void Student::setNext(Student * next)
 {
 	next_ = next;
 }
-Student * Student::getNext()
+Student *Student::getNext()
 {
 	return next_;
 }
@@ -39,10 +41,19 @@ int Student::getID()
 {
 	return id_;
 }
-Student::~Student()
-{
-}
 
+void FindName::setID(int id) {
+	id_ = id;
+}
+int FindName::getID() {
+	return id_;
+}
+void FindName::setCode(int code) {
+	code_ = code;
+}
+int FindName::getCode() {
+	return code_;
+}
 
 int stdnt::FindByID(int id, Student *first, Student * &p) {
 	bool IsFound = true;
@@ -157,6 +168,54 @@ int stdnt::DeleteByCode(Student * &first, int code) {
 		return -1;
 	}
 }
+int stdnt::FindByNameCount(std::string name, Student * first)
+{
+	int count = 0;
+	bool t = true;
+	Student *p = first;
+	while (t)
+	{
+		if (p->getNext() != 0) {
+			if (name.compare(p->getName())==0) {
+				count++;
+			}
+			p = p->getNext();
+		}
+		else {
+			if (name.compare(p->getName()) == 0) {
+				count++;
+			}
+			t = false;
+		}
+	}
+	return count;
+}
+int stdnt::FindByName(std::string name, Student * first, FindName* &fn)
+{ 
+	int i = 0, n = FindByNameCount(name, first);
+	Student* p = first;
+	if (n != 0) {
+		fn = new FindName[n];
+		bool t = true;
+		while (t)
+		{
+			if (p->getNext()!=0) {
+				if (name.compare(p->getName()) == 0) {
+					fn[i].setCode(p->getCode()) ;
+					fn[i].setID(p->getID());
+					i++;
+				}
+				p = p->getNext();
+			}
+			else {
+				fn[i].setCode(p->getCode());
+				fn[i].setID(p->getID());
+				t = false;
+			}
+		}
+	}
+	return n;
+}
 void stdnt::RefactorID(Student* first) {
 	bool t = true;
 	int i = 1;
@@ -202,6 +261,7 @@ void stdnt::Menu_console(int &c) {
 	std::cout << "  1. Add a student to list" << std::endl;
 	std::cout << "  2. View student list" << std::endl;
 	std::cout << "  3. Delete a Student ->" << std::endl;
+	std::cout << "  4. Find Student by Name" << std::endl;
 	std::cout << "  0. Exit" << std::endl;
 	std::cout << std::endl << "Enter your choice: ";
 	std::cin >> c;
@@ -241,6 +301,7 @@ void stdnt::Input_console(std::string &name, int &code, int id) {
 	std::cout << " student:\n";
 	std::cout << "     Name: ";
 	std::getline(std::cin, name);
+	StringProcess(name);
 	std::cout << "     Code: ";
 	std::cin >> code;
 	std::cin.ignore(1);
@@ -309,6 +370,7 @@ void stdnt::DelStudentByCode_console(Student * &first) {
 	}
 }
 void stdnt::AddStudent_console(std::string name, int code, int &i, Student * &p, Student * &first) {
+	Input_console(name, code, i);
 	if (AddStudent(name, code, i, p, first) == -1) {
 		std::cout << "Error: You have enter a Student existed code" << std::endl;
 		wait();
@@ -343,6 +405,31 @@ void stdnt::DeleteStudent_console(Student * &first, int &i) {
 			std::cout << "Error: You have entered an invalid option. Please choice again." << std::endl;
 			wait();
 			break;
+		}
+	}
+	else {
+		std::cout << "Error: You do not have a Student to delete." << std::endl;
+		wait();
+	}
+}
+void stdnt::FindName_console(Student * first)
+{
+	if (first != 0) {
+		std::string name;
+		std::cout << "Enter Name of Student to search: ";
+		std::getline(std::cin, name);
+		StringProcess(name);
+		FindName * fn;
+		int n = FindByName(name, first, fn);
+		if (n != 0) {
+			std::cout << "Result of " << name << " :" << std::endl;
+			for (int i = 0; i < n; i++) {
+				std::cout << "ID=" << fn[i].getID() << " Code=" << fn[i].getCode() << std::endl;
+			}
+		}
+		else {
+			std::cout << "Not found Student name: " << name << std::endl;
+			wait();
 		}
 	}
 	else {

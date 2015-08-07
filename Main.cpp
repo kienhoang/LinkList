@@ -13,10 +13,10 @@ int main() {
 	{
 		int c1;
 		Menu_console(c1);
+		FindName *fn = 0;
 		switch (c1)
 		{
 		case 1:
-			Input_console(name, code, i);
 			AddStudent_console(name, code, i, p, first);
 			break;
 		case 2:
@@ -24,6 +24,9 @@ int main() {
 			break;
 		case 3:
 			DeleteStudent_console(first, i);
+			break;
+		case 4:
+			FindName_console(first);
 			break;
 		case 0:
 			Release(first);

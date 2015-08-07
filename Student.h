@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include "StringProcess.h"
+
 class Student
 {
 private:
@@ -20,13 +22,26 @@ public:
 	void setID(int id);
 	int getID();
 };
+class FindName {
+private: 
+	int id_;
+	int code_;
+public:
+	void setID(int id);
+	int getID();
+	void setCode(int code);
+	int getCode();
+};
 namespace stdnt {
+
 	int FindByID(int id, Student *first, Student * &p);
 	int FindByCode(int code, Student *first, Student * &p);
 	int Add(std::string name, int code, int &i, Student * &p, Student * &first);
 	int AddStudent(std::string name, int code, int &i, Student * &p, Student * &first);
 	int DeleteByID(Student * &first, int id);
 	int DeleteByCode(Student * &first, int code);
+	int FindByNameCount(std::string name, Student *first);
+	int FindByName(std::string name, Student *first, FindName * &fn);
 	void RefactorID(Student* first);
 	void Release(Student* &first);
 
@@ -39,5 +54,6 @@ namespace stdnt {
 	void DelStudentByCode_console(Student * &first);
 	void AddStudent_console(std::string name, int code, int &i, Student * &p, Student * &first);
 	void DeleteStudent_console(Student * &first, int &i);
+	void FindName_console(Student* first);
 }
 

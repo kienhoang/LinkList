@@ -1,20 +1,20 @@
-﻿Build started 06/08/2015 18:53:11.
+﻿Build started 07/08/2015 11:49:13.
      1>Project "D:\_Project_Program\VS-C++.edu\LinkList\LinkList\LinkList.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\ProgramSetup\VS\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp Student.cpp StudentFunction.cpp
+         D:\ProgramSetup\VS\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp Student.cpp
          Main.cpp
          Student.cpp
-         StudentFunction.cpp
        Link:
          D:\ProgramSetup\VS\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\_Project_Program\VS-C++.edu\LinkList\Release\LinkList.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\_Project_Program\VS-C++.edu\LinkList\Release\LinkList.pdb" /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\_Project_Program\VS-C++.edu\LinkList\Release\LinkList.lib" /MACHINE:X86 /SAFESEH Release\Main.obj
          Release\Student.obj
-         Release\StudentFunction.obj
          Generating code
-         All 130 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+         8 of 159 functions ( 5.0%) were compiled, the rest were copied from previous compilation.
+           4 functions were new in current compilation
+           23 functions had inline decision re-evaluated but remain unchanged
          Finished generating code
          LinkList.vcxproj -> D:\_Project_Program\VS-C++.edu\LinkList\Release\LinkList.exe
      1>Done Building Project "D:\_Project_Program\VS-C++.edu\LinkList\LinkList\LinkList.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:03.73
+Time Elapsed 00:00:05.60

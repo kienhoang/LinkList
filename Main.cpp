@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Student.h"
-
-using namespace stdnt;
+#include "StudentConsole.h"
 
 int main() {
 	std::string name="";
@@ -23,10 +22,13 @@ int main() {
 			PrintList_console(first);
 			break;
 		case 3:
-			DeleteStudent_console(first, i);
+			FindName_console(first);
 			break;
 		case 4:
-			FindName_console(first);
+			Edit_console(first);
+			break;
+		case 5:
+			DeleteStudent_console(first, i);
 			break;
 		case 0:
 			Release(first);

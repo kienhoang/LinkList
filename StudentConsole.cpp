@@ -5,11 +5,29 @@ void wait() {
 	std::cout << "Press Enter to continue. . .";
 	getchar();
 }
+void printStudent(Student *p) {
+	std::cout << "ID=" << p->getID() << " | Code=" << p->getCode() << " | Name='";
+	if (p->getName().compare("") == 0) {
+		std::cout << "<Empty Name>" << std::endl;
+	}
+	else {
+		std::cout << p->getName() << std::endl;
+	}
+}
+void printStudent(Student p) {
+	std::cout << "ID=" << p.getID() << " | Code=" << p.getCode() << " | Name=";
+	if (p.getName().compare("") == 0) {
+		std::cout << "<Empty Name>" << std::endl;
+	}
+	else {
+		std::cout << "'" << p.getName() << "'" << std::endl;
+	}
+}
 void Menu_console(int &c) {
 	std::cout << "============MENU==============" << std::endl << std::endl;
 	std::cout << "  1. Add a student to list" << std::endl;
 	std::cout << "  2. View student list" << std::endl;
-	std::cout << "  3. Find Student by Name" << std::endl;
+	std::cout << "  3. Find Student ->" << std::endl;
 	std::cout << "  4. Edit Student Infomation ->" << std::endl;
 	std::cout << "  5. Delete a Student ->" << std::endl;
 	std::cout << "  0. Exit" << std::endl;
@@ -19,8 +37,9 @@ void Menu_console(int &c) {
 }
 void MenuDelete_console(int &c) {
 	std::cout << "====== Delete a student ======" << std::endl << std::endl;
-	std::cout << "  1. Delete By Code" << std::endl;
-	std::cout << "  2. Delete By ID (be carefully)" << std::endl;
+	std::cout << "  1. Delete By Name" << std::endl;
+	std::cout << "  2. Delete By Code" << std::endl;
+	std::cout << "  3. Delete By ID (be carefully)" << std::endl;
 	std::cout << "  0. Back to main Menu" << std::endl;
 	std::cout << std::endl << "Enter your choice: ";
 	std::cin >> c;
@@ -30,6 +49,17 @@ void MenuEdit_console(int &c) {
 	std::cout << "===Edit Student Infomation====" << std::endl << std::endl;
 	std::cout << "  1. Edit Name By ID" << std::endl;
 	std::cout << "  2. Edit Name By Code" << std::endl;
+	std::cout << "  0. Back to main Menu" << std::endl;
+	std::cout << std::endl << "Enter your choice: ";
+	std::cin >> c;
+	std::cin.ignore(1);
+}
+void MenuFind_console(int &c) {
+	std::cout << "=========Find Student=========" << std::endl << std::endl;
+	std::cout << "  1. Find By Name" << std::endl;
+	std::cout << "  2. Find By Code" << std::endl;
+	std::cout << "  3. Find By ID" << std::endl;
+	std::cout << "  0. Back to main Menu" << std::endl;
 	std::cout << std::endl << "Enter your choice: ";
 	std::cin >> c;
 	std::cin.ignore(1);
@@ -140,9 +170,50 @@ void DelStudentByCode_console(Student * &first) {
 		std::cout << "Done." << std::endl;
 	}
 }
-void AddStudent_console(std::string name, int code, int &i, Student * &p, Student * &first) {
-	Input_console(name, code, i);
-	if (AddStudent(name, code, i, p, first) == -1) {
+void DelStudentByName_console(Student * &first) {
+	std::string name;
+	std::cout << "Enter Name of Student to delete: ";
+	std::getline(std::cin, name);
+	NameProcess(name);
+	Student * fn = 0;
+	int n = FindByName(name, first, fn);
+	if (n != 0) {
+		std::cout << "Result of " << name << " :" << std::endl;
+		for (int i = 0; i < n; i++) {
+			printStudent(fn[i]);
+		}
+		std::cout << "Which ID of Student that you want to delete (0 to cancel): ";
+		int c = 0;
+		std::cin >> c;
+		std::cin.ignore(1);
+		bool t = false;
+		if (c != 0) {
+			for (int i = 0; i < n; i++) {
+				if (c == fn[i].getID()) {
+					t = true;
+				}
+			}
+			if (t) {
+				DeleteByID(first, c);
+				delete[] fn;
+			}
+			else {
+				std::cout << "Error: Invalid ID" << std::endl;
+				wait();
+			}
+		}
+		else {
+			std::cout << "Cancel." << std::endl;
+		}
+	}
+	else {
+		std::cout << "Error: Invalid Student's Name." << std::endl;
+		wait();
+	}
+}
+void AddStudent_console(std::string name, int code, int &id, Student * &p, Student * &first) {
+	Input_console(name, code, id);
+	if (AddStudent(name, code, id, p, first) == -1) {
 		std::cout << "Error: You have enter a Student existed code" << std::endl;
 		wait();
 	}
@@ -150,62 +221,55 @@ void AddStudent_console(std::string name, int code, int &i, Student * &p, Studen
 		std::cout << "Success." << std::endl;
 	}
 }
-void DeleteStudent_console(Student * &first, int &i) {
-	if (first != 0) {
-		int c2;
-		MenuDelete_console(c2);
-		switch (c2)
-		{
-		case 1:
-			DelStudentByCode_console(first);
-			i--;
-			if (first != 0) {
-				RefactorID(first);
-			}
-			break;
-		case 2:
-			DelStudentByID_console(first);
-			i--;
-			if (first != 0) {
-				RefactorID(first);
-			}
-			break;
-		case 0:
-			break;
-		default:
-			std::cout << "Error: You have entered an invalid option. Please choice again." << std::endl;
-			wait();
-			break;
+void FindName_console(Student * first) {
+	std::string name;
+	std::cout << "Enter Name of Student to search: ";
+	std::getline(std::cin, name);
+	NameProcess(name);
+	Student * fn = 0;
+	int n = FindByName(name, first, fn);
+	if (n != 0) {
+		std::cout << "Result of " << name << " :" << std::endl;
+		for (int i = 0; i < n; i++) {
+			printStudent(fn[i]);
 		}
+		delete[] fn;
+		wait();
 	}
 	else {
-		std::cout << "Error: You do not have any Student to delete." << std::endl;
+		std::cout << "Not found Student name: " << name << std::endl;
 		wait();
 	}
 }
-void FindName_console(Student * first)
-{
-	if (first != 0) {
-		std::string name;
-		std::cout << "Enter Name of Student to search: ";
-		std::getline(std::cin, name);
-		NameProcess(name);
-		FindName * fn;
-		int n = FindByName(name, first, fn);
-		if (n != 0) {
-			std::cout << "Result of " << name << " :" << std::endl;
-			for (int i = 0; i < n; i++) {
-				std::cout << "ID=" << fn[i].getID() << " Code=" << fn[i].getCode() << std::endl;
-			}
-			wait();
-		}
-		else {
-			std::cout << "Not found Student name: " << name << std::endl;
-			wait();
-		}
+void FindID_console(Student *first) {
+	int id = 0;
+	Student *p = 0;
+	std::cout << "Input ID of Student to search: ";
+	std::cin >> id;
+	std::cin.ignore(1);
+	if (FindByID(id, first, p) == 0) {
+		std::cout << "Result of ID=" << id << " :" << std::endl;
+		printStudent(p);
+		wait();
 	}
 	else {
-		std::cout << "Error: You do not have a Student to delete." << std::endl;
+		std::cout << "Error: ID not found." << std::endl;
+		wait();
+	}
+}
+void FindCode_console(Student *first) {
+	int code = 0;
+	Student *p = 0;
+	std::cout << "Input Code of Student to search: ";
+	std::cin >> code;
+	std::cin.ignore(1);
+	if (FindByCode(code, first, p) == 0) {
+		std::cout << "Result of Code=" << code << " :" << std::endl;
+		printStudent(p);
+		wait();
+	}
+	else {
+		std::cout << "Error: Code not found." << std::endl;
 		wait();
 	}
 }
@@ -236,6 +300,45 @@ void EditNameByID_console(Student * first)
 		wait();
 	}
 }
+void DeleteStudent_console(Student * &first, int &id) {
+	if (first != 0) {
+		int c2;
+		MenuDelete_console(c2);
+		switch (c2)
+		{
+		case 1:
+			DelStudentByName_console(first);
+			id--;
+			if (first != 0) {
+				RefactorID(first);
+			}
+			break;
+		case 2:
+			DelStudentByCode_console(first);
+			id--;
+			if (first != 0) {
+				RefactorID(first);
+			}
+			break;
+		case 3:
+			DelStudentByID_console(first);
+			id--;
+			if (first != 0) {
+				RefactorID(first);
+			}
+		case 0:
+			break;
+		default:
+			std::cout << "Error: You have entered an invalid option. Please choice again." << std::endl;
+			wait();
+			break;
+		}
+	}
+	else {
+		std::cout << "Error: You do not have any Student to delete." << std::endl;
+		wait();
+	}
+}
 void Edit_console(Student *first) {
 	if (first != 0) {
 		int c = 0;
@@ -245,6 +348,8 @@ void Edit_console(Student *first) {
 		case 1:
 			EditNameByID_console(first);
 			break;
+		case 0:
+			break;
 		default:
 			std::cout << "Error: You have entered an invalid option. Please choice again." << std::endl;
 			wait();
@@ -253,6 +358,34 @@ void Edit_console(Student *first) {
 	}
 	else {
 		std::cout << "Error: You do not have any Student to edit." << std::endl;
+		wait();
+	}
+}
+void Find_console(Student *first) {
+	if (first != 0) {
+		int c;
+		MenuFind_console(c);
+		switch (c)
+		{
+		case 1:
+			FindName_console(first);
+			break;
+		case 2:
+			FindCode_console(first);
+			break;
+		case 3:
+			FindID_console(first);
+			break;
+		case 0:
+			break;
+		default:
+			std::cout << "Error: You have entered an invalid option. Please choice again." << std::endl;
+			wait();
+			break;
+		}
+	}
+	else {
+		std::cout << "Error: You do not have any Student to find." << std::endl;
 		wait();
 	}
 }

@@ -1,11 +1,11 @@
 #include "Student.h"
 
-Student::Student(std::string name, int code,int id)
+Student::Student(std::string name, int code,int id,Student* next)
 {
 	name_ = name;
 	code_ = code;
 	id_ = id;
-	next_ = 0;
+	next_ = next;
 }
 Student::~Student() {
 }
@@ -40,19 +40,6 @@ void Student::setID(int id)
 int Student::getID()
 {
 	return id_;
-}
-
-void FindName::setID(int id) {
-	id_ = id;
-}
-int FindName::getID() {
-	return id_;
-}
-void FindName::setCode(int code) {
-	code_ = code;
-}
-int FindName::getCode() {
-	return code_;
 }
 
 int stdnt::FindByID(int id, Student *first, Student * &p) {
@@ -93,20 +80,20 @@ int stdnt::FindByCode(int code, Student *first, Student * &p) {
 		return -1;
 	}
 }
-int stdnt::Add(std::string name, int code, int &i, Student * &p, Student * &first) {
-	if (i == 1) {
-		first = new Student(name, code, i);
+int stdnt::Add(std::string name, int code, int &id, Student * &p, Student * &first) {
+	if (id == 1) {
+		first = new Student(name, code, id);
 		p = first;
-		i++;
+		id++;
 		return 0;
 	}
 	else {
 		Student *n = 0;
-		n = new Student(name, code, i);
+		n = new Student(name, code, id);
 		if (n != 0) {
 			p->setNext(n);
 			p = n;
-			i++;
+			id++;
 			return 0;
 		}
 		else {
@@ -114,18 +101,18 @@ int stdnt::Add(std::string name, int code, int &i, Student * &p, Student * &firs
 		}
 	}
 }
-int stdnt::AddStudent(std::string name, int code, int &i, Student * &p, Student * &first) {
+int stdnt::AddStudent(std::string name, int code, int &id, Student * &p, Student * &first) {
 	Student *n = 0;
 	if (first != 0) {
 		if (FindByCode(code, first, n) == 0) {
 			return -1;
 		}
 		else {
-			return Add(name, code, i, p, first);
+			return Add(name, code, id, p, first);
 		}
 	}
 	else {
-		return Add(name, code, i, p, first);
+		return Add(name, code, id, p, first);
 	}
 }
 int stdnt::DeleteByID(Student * &first, int id) {
@@ -189,12 +176,12 @@ int stdnt::FindByNameCount(std::string name, Student * first)
 	}
 	return count;
 }
-int stdnt::FindByName(std::string name, Student * first, FindName* &fn)
+int stdnt::FindByName(std::string name, Student * first, Student* &fn)
 { 
 	int i = 0, n = FindByNameCount(name, first);
 	Student* p = first;
 	if (n != 0) {
-		fn = new FindName[n];
+		fn = new Student[n];
 		bool t = true;
 		while (t)
 		{
@@ -202,13 +189,17 @@ int stdnt::FindByName(std::string name, Student * first, FindName* &fn)
 				if (name.compare(p->getName()) == 0) {
 					fn[i].setCode(p->getCode()) ;
 					fn[i].setID(p->getID());
+					fn[i].setName(p->getName());
 					i++;
 				}
 				p = p->getNext();
 			}
 			else {
-				fn[i].setCode(p->getCode());
-				fn[i].setID(p->getID());
+				if (name.compare(p->getName()) == 0) {
+					fn[i].setCode(p->getCode());
+					fn[i].setID(p->getID());
+					fn[i].setName(p->getName());
+				}
 				t = false;
 			}
 		}

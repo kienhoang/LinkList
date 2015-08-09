@@ -9,7 +9,7 @@ private:
 	Student* next_;
 	int id_;
 public:
-	Student(std::string name="", int code=0,int id=0);
+	Student(std::string name="", int code=0,int id=0,Student* next=0);
 	~Student();
 	void setName(std::string name);
 	std::string getName();
@@ -20,26 +20,17 @@ public:
 	void setID(int id);
 	int getID();
 };
-class FindName {
-private: 
-	int id_;
-	int code_;
-public:
-	void setID(int id);
-	int getID();
-	void setCode(int code);
-	int getCode();
-};
+
 namespace stdnt {
 
 	int FindByID(int id, Student *first, Student * &p);
 	int FindByCode(int code, Student *first, Student * &p);
-	int Add(std::string name, int code, int &i, Student * &p, Student * &first);
-	int AddStudent(std::string name, int code, int &i, Student * &p, Student * &first);
+	int Add(std::string name, int code, int &id, Student * &p, Student * &first);
+	int AddStudent(std::string name, int code, int &id, Student * &p, Student * &first);
 	int DeleteByID(Student * &first, int id);
 	int DeleteByCode(Student * &first, int code);
 	int FindByNameCount(std::string name, Student *first);
-	int FindByName(std::string name, Student *first, FindName * &fn);
+	int FindByName(std::string name, Student *first, Student * &fn);
 	void RefactorID(Student* first);
 	void Release(Student* &first);
 }

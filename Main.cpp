@@ -5,30 +5,29 @@
 int main() {
 	std::string name="";
 	int code = 0;
-	int i = 1;
+	int id = 1;
 	Student *first = 0, *p = 0;
 	bool t1 = true;
 	while (t1)
 	{
 		int c1;
 		Menu_console(c1);
-		FindName *fn = 0;
 		switch (c1)
 		{
 		case 1:
-			AddStudent_console(name, code, i, p, first);
+			AddStudent_console(name, code, id, p, first);
 			break;
 		case 2:
 			PrintList_console(first);
 			break;
 		case 3:
-			FindName_console(first);
+			Find_console(first);
 			break;
 		case 4:
 			Edit_console(first);
 			break;
 		case 5:
-			DeleteStudent_console(first, i);
+			DeleteStudent_console(first, id);
 			break;
 		case 0:
 			Release(first);

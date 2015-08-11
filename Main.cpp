@@ -1,13 +1,14 @@
 #include <iostream>
 #include "Student.h"
 #include "StudentConsole.h"
-
+#include "StudentFile.h"
 int main() {
 	std::string name="";
 	int code = 0;
 	int id = 1;
 	Student *first = 0, *p = 0;
 	bool t1 = true;
+	StudentFile file;
 	while (t1)
 	{
 		int c1;
@@ -29,6 +30,20 @@ int main() {
 		case 5:
 			DeleteStudent_console(first, id);
 			break;
+		case  6:
+			file.CreateFile();
+			file.WriteFile(first);
+			file.CloseFile();
+			break;
+		case 7:
+			if (file.OpenFile()) {
+				file.ImportFromFile(first, p, id);
+				file.CloseFile();
+			}
+			else {
+				std::cout << "Error: Cannot open file!" << std::endl;
+			}
+			break;
 		case 0:
 			Release(first);
 			t1 = false;
@@ -39,5 +54,7 @@ int main() {
 			break;
 		}
 	}
+	
+
 	return 0;
 }

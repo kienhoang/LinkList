@@ -122,11 +122,13 @@
     <ClCompile Include="StringProcess.cpp" />
     <ClCompile Include="Student.cpp" />
     <ClCompile Include="StudentConsole.cpp" />
+    <ClCompile Include="StudentFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StringProcess.h" />
     <ClInclude Include="Student.h" />
     <ClInclude Include="StudentConsole.h" />
+    <ClInclude Include="StudentFile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

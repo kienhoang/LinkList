@@ -239,5 +239,6 @@ void stdnt::Release(Student * &first)
 				t = false;
 			}
 		}
+		first = 0;
 	}
 }

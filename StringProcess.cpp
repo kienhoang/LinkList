@@ -56,3 +56,7 @@ void NameProcess(std::string &c) {
 	ToLowerString(c);
 	UpcaseFirstSpace(c);
 }
+int StringToInt(std::string s) {
+	const char* c_s = s.c_str();
+	return atoi(c_s);
+}

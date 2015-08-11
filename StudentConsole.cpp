@@ -30,6 +30,8 @@ void Menu_console(int &c) {
 	std::cout << "  3. Find Student ->" << std::endl;
 	std::cout << "  4. Edit Student Infomation ->" << std::endl;
 	std::cout << "  5. Delete a Student ->" << std::endl;
+	std::cout << "  6. Save List to file" << std::endl;
+	std::cout << "  7. Import Data from file" << std::endl;
 	std::cout << "  0. Exit" << std::endl;
 	std::cout << std::endl << "Enter your choice: ";
 	std::cin >> c;
